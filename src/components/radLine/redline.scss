@@ -1,0 +1,20 @@
+.red-line {
+  z-index: 45;
+  display: block;
+  position: absolute;
+  width: 100%;
+  align-items: center;
+  background-color: #f00;
+  height: 2px;
+  &:before {
+    content: '';
+    position: absolute;
+    display: block;
+    top: -4px;
+    left: -5px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: red;
+  }
+}
