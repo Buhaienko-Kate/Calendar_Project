@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import './header.scss';
 
@@ -21,4 +22,13 @@ const Header = ({ currentWeek, nextWeek, prevWeek, monthString, showPopup }) => 
     </div>
   </header>
 );
+
+Header.propTypes = {
+  currentWeek: PropTypes.func.isRequired,
+  nextWeek: PropTypes.func.isRequired,
+  prevWeek: PropTypes.func.isRequired,
+  monthString: PropTypes.string.isRequired,
+  showPopup: PropTypes.func,
+};
+
 export default Header;

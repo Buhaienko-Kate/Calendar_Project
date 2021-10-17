@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useEffect, useState } from 'react';
 import Header from './components/header/Header.jsx';
 import Calendar from './components/calendar/Calendar.jsx';
 import Modal from './components/modal/Modal.jsx';
@@ -8,58 +8,40 @@ import { getWeekStartDate, generateWeekRange, getMonthString } from './utils/dat
 
 import './common.scss';
 
-class App extends Component {
-  state = {
-    weekStartDate: new Date(),
-    isPopup: false,
-    events: [],
+const App = () => {
+  const [weekStartDate, setWeekStartDate] = useState(new Date());
+  const [isPopup, setIsPopup] = useState(false);
+  const [events, setEvents] = useState([]);
+
+  const toggleCurrentWeek = () => {
+    setWeekStartDate(new Date());
   };
 
-  toggleCurrentWeek = () => {
-    this.setState({
-      weekStartDate: new Date(),
-    });
+  const toggleNextWeek = () => {
+    setWeekStartDate(new Date(weekStartDate.setDate(new Date(weekStartDate).getDate() + 7)));
   };
 
-  toggleNextWeek = () => {
-    this.setState({
-      weekStartDate: new Date(
-        this.state.weekStartDate.setDate(new Date(this.state.weekStartDate).getDate() + 7),
-      ),
-    });
+  const togglePrevWeek = () => {
+    setWeekStartDate(new Date(weekStartDate.setDate(new Date(weekStartDate).getDate() - 7)));
   };
 
-  togglePrevWeek = () => {
-    this.setState({
-      weekStartDate: new Date(
-        this.state.weekStartDate.setDate(new Date(this.state.weekStartDate).getDate() - 7),
-      ),
-    });
+  const showPopup = () => {
+    setIsPopup(true);
   };
 
-  showPopup = () => {
-    this.setState({
-      isPopup: true,
-    });
+  const hidePopup = () => {
+    setIsPopup(false);
   };
 
-  hidePopup = () => {
-    this.setState({
-      isPopup: false,
-    });
-  };
-
-  getEventsList = () => {
+  const getEventsList = () => {
     fetchEventsList()
       .then(eventsList => {
-        this.setState({
-          events: eventsList,
-        });
+        setEvents(eventsList);
       })
       .catch(error => alert(error));
   };
 
-  handleSubmit = (e, eventData) => {
+  const handleSubmit = (e, eventData) => {
     e.preventDefault();
 
     const { title, date, startTime, endTime, description } = eventData;
@@ -70,51 +52,37 @@ class App extends Component {
       dateFrom: new Date(`${date} ${startTime}`),
       dateTo: new Date(`${date} ${endTime}`),
     };
-    createEvent(newEvent).then(() => this.getEventsList());
+    createEvent(newEvent).then(() => getEventsList());
 
-    this.setState({
-      isPopup: false,
-    });
+    setIsPopup(false);
   };
 
-  componentDidMount() {
-    this.getEventsList();
-  }
+  useEffect(() => {
+    getEventsList();
+  }, []);
 
-  onDeleteEvent = id => deleteEvent(id).then(() => this.getEventsList());
+  const onDeleteEvent = id => deleteEvent(id).then(() => getEventsList());
 
-  render() {
-    const { weekStartDate } = this.state;
+  // const { weekStartDate } = this.state;
 
-    const weekDates = generateWeekRange(getWeekStartDate(weekStartDate));
+  const weekDates = generateWeekRange(getWeekStartDate(weekStartDate));
 
-    const monthString = getMonthString(weekStartDate);
-    // console.log(monthString);
-    return (
-      <>
-        <Header
-          currentWeek={this.toggleCurrentWeek}
-          nextWeek={this.toggleNextWeek}
-          prevWeek={this.togglePrevWeek}
-          monthString={monthString}
-          showPopup={this.showPopup}
-        />
-        <Calendar
-          deleteEvent={this.onDeleteEvent}
-          weekDates={weekDates}
-          events={this.state.events}
-        />
+  const monthString = getMonthString(weekStartDate);
+  // console.log(monthString);
+  return (
+    <>
+      <Header
+        currentWeek={toggleCurrentWeek}
+        nextWeek={toggleNextWeek}
+        prevWeek={togglePrevWeek}
+        monthString={monthString}
+        showPopup={showPopup}
+      />
+      <Calendar deleteEvent={onDeleteEvent} weekDates={weekDates} events={events} />
 
-        {this.state.isPopup && (
-          <Modal
-            events={this.state.events}
-            handleSubmit={this.handleSubmit}
-            hidePopup={this.hidePopup}
-          />
-        )}
-      </>
-    );
-  }
-}
+      {isPopup && <Modal events={events} handleSubmit={handleSubmit} hidePopup={hidePopup} />}
+    </>
+  );
+};
 
 export default App;

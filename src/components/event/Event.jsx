@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { deleteValidation } from '../../validation/validation.js';
 import DeleteBtn from './DeleteBtn.jsx';
 
@@ -35,6 +36,16 @@ const Event = ({ height, marginTop, title, time, id, dateFrom, deleteEvent }) =>
       {isDelete && <DeleteBtn deleteTask={deleteEventTask} id={id} />}
     </div>
   );
+};
+
+Event.propTypes = {
+  height: PropTypes.number,
+  marginTop: PropTypes.number,
+  title: PropTypes.string,
+  time: PropTypes.string,
+  id: PropTypes.string,
+  dateFrom: PropTypes.string,
+  deleteEvent: PropTypes.func.isRequired,
 };
 
 export default Event;

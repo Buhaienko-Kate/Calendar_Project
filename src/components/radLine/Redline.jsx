@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './redLine.scss';
 
 const getDistance = () => {
@@ -6,33 +6,26 @@ const getDistance = () => {
   return `${top}px`;
 };
 
-class RedLine extends React.Component {
-  state = {
-    top: getDistance(),
+const RedLine = () => {
+  const [top, setTop] = useState(getDistance());
+
+  useEffect(() => {
+    const interval = setInterval(() => setTop(getDistance()), 60000);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [top]);
+
+  const style = {
+    top: top,
   };
 
-  componentDidMount() {
-    this.interval = setInterval(() => {
-      this.setState({
-        top: getDistance(),
-      });
-    }, 60000);
-  }
+  return (
+    <div style={style} className="red-line">
+      <span className="red-line__line"></span>
+    </div>
+  );
+};
 
-  componentWillUnmount() {
-    clearInterval(this.interval);
-  }
-
-  render() {
-    const style = {
-      top: this.state.top,
-    };
-
-    return (
-      <div style={style} className="red-line">
-        <span className="red-line__line"></span>
-      </div>
-    );
-  }
-}
 export default RedLine;

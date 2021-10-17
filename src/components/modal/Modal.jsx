@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 
 import './modal.scss';
 
@@ -76,6 +77,11 @@ const Modal = ({ handleSubmit, hidePopup }) => {
       </div>
     </div>
   );
+};
+
+Modal.propTypes = {
+  handleSubmit: PropTypes.func.isRequired,
+  hidePopup: PropTypes.func.isRequired,
 };
 
 export default Modal;

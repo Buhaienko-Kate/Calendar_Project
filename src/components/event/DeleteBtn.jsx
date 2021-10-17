@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const DeleteBtn = ({ deleteTask, id }) => (
   <div className="delete-button">
@@ -13,5 +14,10 @@ const DeleteBtn = ({ deleteTask, id }) => (
     </span>
   </div>
 );
+
+DeleteBtn.propTypes = {
+  id: PropTypes.string.isRequired,
+  deleteTask: PropTypes.func.isRequired,
+};
 
 export default DeleteBtn;
