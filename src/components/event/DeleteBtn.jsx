@@ -10,7 +10,7 @@ const DeleteBtn = ({ deleteTask, id }) => (
       }}
       className="delete-button__text"
     >
-      Delete
+      <i className="fas fa-trash"></i> Delete
     </span>
   </div>
 );
