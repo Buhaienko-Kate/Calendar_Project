@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Day from '../day/Day';
-import RedLine from '../radLine/Redline';
+import Redline from '../redLine/Redline';
 
 import './week.scss';
 
@@ -27,7 +27,7 @@ const Week = ({ weekDates, events, deleteEvent }) => (
           deleteEvent={deleteEvent}
           events={events}
         >
-          {curentDay === key && <RedLine />}
+          {curentDay === key && <Redline />}
         </Day>
       );
     })}

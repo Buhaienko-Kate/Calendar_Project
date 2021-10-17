@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import './redLine.scss';
+import './redline.scss';
 
 const getDistance = () => {
   const top = new Date().getHours() * 60 + new Date().getMinutes();
   return `${top}px`;
 };
 
-const RedLine = () => {
+const Redline = () => {
   const [top, setTop] = useState(getDistance());
 
   useEffect(() => {
@@ -28,4 +28,4 @@ const RedLine = () => {
   );
 };
 
-export default RedLine;
+export default Redline;
