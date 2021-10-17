@@ -1,6 +1,6 @@
 # Calendar_Project
 
-**[Site link](https://buhaienko-kate.github.io/Calendar_Project/)**
+**[Site link](https://angry-hamilton-9b5f4c.netlify.app)**
 
 The tech stack is:
 
