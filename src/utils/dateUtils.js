@@ -46,6 +46,13 @@ export const months = [
   'December',
 ];
 
+export const hours = Array(24)
+  .fill()
+  .map((val, index) => index);
+
+export const eventTime = date =>
+  `${new Date(date).getHours()}:${formatMins(new Date(date).getMinutes())}`;
+
 export const getMonthString = weekStartDate => {
   const weekDates = generateWeekRange(getWeekStartDate(weekStartDate));
 

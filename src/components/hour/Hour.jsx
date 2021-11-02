@@ -1,19 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { eventTime } from '../../utils/dateUtils';
 
 import Event from '../event/Event';
-import { formatMins } from '../../../src/utils/dateUtils.js';
 
 const Hour = ({ dataHour, hourEvents, deleteEvent }) => (
   <div className="calendar__time-slot" data-time={dataHour + 1}>
     {/* if no events in the current hour nothing will render here */}
     {hourEvents.map(({ id, dateFrom, dateTo, title, date }) => {
-      const eventStart = `${new Date(dateFrom).getHours()}:${formatMins(
-        new Date(dateFrom).getMinutes(),
-      )}`;
-      const eventEnd = `${new Date(dateTo).getHours()}:${formatMins(
-        new Date(dateTo).getMinutes(),
-      )}`;
+      const eventStart = eventTime(dateFrom);
+
+      const eventEnd = eventTime(dateTo);
 
       return (
         <Event
